@@ -33,7 +33,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Here wifi will enabled
         wifiEnable()
+
     }
 
     @SuppressLint("WifiManagerLeak")
