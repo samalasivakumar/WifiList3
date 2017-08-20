@@ -1,0 +1,80 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="40dp">
+
+        <RelativeLayout
+            android:id="@+id/one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img1"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:src="@drawable/wifi"
+                android:text="Textview one" />
+
+            <ImageView
+                android:id="@+id/img12"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_toRightOf="@+id/img1"
+                android:src="@drawable/plane"
+                android:text="Textview one" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/one">
+
+            <ImageView
+                android:id="@+id/img21"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:src="@drawable/bluetooth"
+                android:text="Textview one" />
+
+            <ImageView
+                android:id="@+id/img22"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_toRightOf="@+id/img21"
+                android:src="@drawable/sound"
+                android:text="Textview one" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/two">
+
+            <ImageView
+                android:id="@+id/img31"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:src="@drawable/autorotate"
+                android:text="Textview one" />
+
+            <ImageView
+                android:id="@+id/img32"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_toRightOf="@+id/img31"
+                android:src="@drawable/mobiledata"
+                android:text="Textview one" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>
