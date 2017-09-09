@@ -15,151 +15,67 @@ import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
+import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.connect.*
+import android.media.AudioManager
+import java.lang.Compiler.disable
+import android.bluetooth.BluetoothAdapter
+import android.graphics.drawable.Drawable
+import android.net.Uri
+import java.io.File
+import java.io.InputStream
+
 
 class MainActivity : AppCompatActivity() {
 
-    internal var mainWifi: WifiManager? = null
-    var receiverWifi: WifiReceiver? = null
-    var wifiList: List<ScanResult>? = null
-
-    @SuppressLint("WifiManagerLeak")
+    var silentStatus: Boolean = false
+    var vibrateStatus: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Here wifi will enabled
-        wifiEnable()
-
-    }
-
-    @SuppressLint("WifiManagerLeak")
-    fun wifiEnable(){
-        // Initiate wifi service manager
-        mainWifi = getSystemService(Context.WIFI_SERVICE) as WifiManager
-
-        if (!mainWifi!!.isWifiEnabled) {
-            // If wifi disabled then enable it
-            Toast.makeText(applicationContext, "wifi is disabled..making it enabled",
-                    Toast.LENGTH_LONG).show()
-
-            mainWifi!!.isWifiEnabled = true
+        wifi.setOnClickListener {
+            val intent = Intent(this, WifiInformation::class.java)
+            startActivity(intent)
         }
 
-        // wifi scaned value broadcast receiver
-        receiverWifi = WifiReceiver()
+        silent.setOnClickListener {
+            val audioManager = applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+            audioManager.ringerMode = if (!silentStatus) AudioManager.RINGER_MODE_SILENT else AudioManager.RINGER_MODE_NORMAL
+            if (!silentStatus)
+                silent.setImageResource(R.drawable.silent_on);
+            else
+                silent.setImageResource(R.drawable.silent);
+            silentStatus = !silentStatus
 
-        // Register broadcast receiver
-        // Broacast receiver will automatically call when number of wifi connections changed
-        registerReceiver(receiverWifi, IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
-        supportActionBar!!.title = "Scanning..."
-        mainWifi!!.startScan()
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION), 0x12345)
-            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
-
-        } else {
-            mainWifi!!.startScan()
-            //do something, permission was previously granted; or legacy device
         }
 
-        list?.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            // selected item
-            val ssid = (view as TextView).text.toString()
-            ssid.connectToWifi()
-            Toast.makeText(this@MainActivity, "Wifi SSID : " + ssid, Toast.LENGTH_SHORT).show()
+        vibrate.setOnClickListener {
+            val audioManager = applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+            audioManager.ringerMode = if (!vibrateStatus) AudioManager.RINGER_MODE_VIBRATE else AudioManager.RINGER_MODE_NORMAL
+            if (!vibrateStatus)
+                vibrate.setImageResource(R.drawable.vibrate_on);
+            else
+                vibrate.setImageResource(R.drawable.vibrate);
+            vibrateStatus = !vibrateStatus
         }
-    }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        if (requestCode == 0x12345) {
-            grantResults
-                    .filter { it != PackageManager.PERMISSION_GRANTED }
-                    .forEach { return }
-            mainWifi!!.startScan()
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menu.add(0, 0, 0, "Refresh")
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onPause() {
-        unregisterReceiver(receiverWifi)
-        super.onPause()
-    }
-
-    override fun onResume() {
-        registerReceiver(receiverWifi, IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
-        super.onResume()
-    }
-
-    // Broadcast receiver class called its receive method
-    // when number of wifi connections changed
-    inner class WifiReceiver : BroadcastReceiver() {
-
-        // This method call when number of wifi connections changed
-        override fun onReceive(c: Context, intent: Intent) {
-
-            supportActionBar!!.title = "Scanning..."
-            wifiList = mainWifi!!.scanResults
-
-
-            val filtered = arrayOfNulls<String>(wifiList!!.size)
-            supportActionBar!!.title = "Total Connections: ${filtered.size}"
-            mainText.text = wifiList!!.get(0).toString()
-
-            // Setting wifi details to list view
-            var counter = 0
-            wifiList!!.forEach { eachWifi ->
-
-                filtered[counter] = eachWifi.SSID
-                counter++
+        bluetooth.setOnClickListener {
+            val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+            if (mBluetoothAdapter.isEnabled) {
+                mBluetoothAdapter.disable()
+                bluetooth.setImageResource(R.drawable.bluetooth);
             }
-            filtered.sort()
-            list!!.adapter = ArrayAdapter<String>(applicationContext, R.layout.list_item, R.id.label, filtered)
+            else {
+                mBluetoothAdapter.enable()
+                bluetooth.setImageResource(R.drawable.bluetooth_on);
+            }
         }
     }
 
-    private fun String.connectToWifi() {
-        val dialog = Dialog(this@MainActivity)
-        dialog.setContentView(R.layout.connect)
-        dialog.setTitle("Connect to Network")
-
-        dialog.textSSID1.text = this
-        // if button is clicked, connect to the network;
-        dialog.okButton.setOnClickListener {
-            val checkPassword = dialog.textPassword.text.toString()
-            finallyConnect(checkPassword, this)
-            dialog.dismiss()
-        }
-        dialog.cancelButton.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
-    }
-
-    private fun finallyConnect(networkPass: String, networkSSID: String) {
-        val wifiConfig = WifiConfiguration()
-        wifiConfig.SSID = String.format("\"%s\"", networkSSID)
-        wifiConfig.preSharedKey = String.format("\"%s\"", networkPass)
-
-        // remember id
-        val netId = mainWifi!!.addNetwork(wifiConfig)
-        mainWifi!!.disconnect()
-        mainWifi!!.enableNetwork(netId, true)
-        mainWifi!!.reconnect()
-
-        val conf = WifiConfiguration()
-        conf.SSID = "\"\"" + networkSSID + "\"\""
-        conf.preSharedKey = "\"" + networkPass + "\""
-        mainWifi!!.addNetwork(conf)
-    }
 }

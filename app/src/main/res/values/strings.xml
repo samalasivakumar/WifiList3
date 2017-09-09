@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">WifiList3</string>
+    <string name="wifi_desc">Toogle Wifi</string>
+    <string name="silent_desc">Toogle Wifi</string>
+    <string name="vibrate_desc">Toogle Wifi</string>
+    <string name="bluetooth_desc">Toogle Wifi</string>
+    <string name="mobiledata_desc">Toogle Wifi</string>
+    <string name="flightmode_desc">Toogle Wifi</string>
 </resources>

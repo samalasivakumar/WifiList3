@@ -1,27 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:columnCount="2"
+    android:orientation="horizontal"
+    android:useDefaultMargins="true"
     tools:context="com.example.sivakumar.wifilist3.MainActivity">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentStart="true">
 
-    <TextView
-        android:id="@+id/mainText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Hellow World" />
+    <ImageView
+        android:id="@+id/wifi"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal"
+        android:layout_rowWeight="1"
+        android:background="@color/colorAccent"
+        android:contentDescription="@string/wifi_desc"
+        android:gravity="center"
+        android:src="@drawable/wifi"
+        android:textColor="@color/white"
+        android:textSize="90sp" />
 
-    <ListView
-    android:id="@android:id/list"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/silent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal"
+        android:layout_rowWeight="1"
+        android:background="@color/colorAccent"
+        android:contentDescription="@string/silent_desc"
+        android:gravity="center"
+        android:src="@drawable/silent"
+        android:textColor="@color/white"
+        android:textSize="90sp" />
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/vibrate"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal"
+        android:layout_rowWeight="1"
+        android:background="@color/colorAccent"
+        android:contentDescription="@string/vibrate_desc"
+        android:gravity="center"
+        android:src="@drawable/vibrate"
+        android:textColor="@color/white"
+        android:textSize="90sp" />
+
+    <ImageView
+        android:id="@+id/bluetooth"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal"
+        android:layout_rowWeight="1"
+        android:background="@color/colorAccent"
+        android:contentDescription="@string/bluetooth_desc"
+        android:gravity="center"
+        android:src="@drawable/bluetooth"
+        android:textColor="@color/white"
+        android:textSize="90sp" />
+
+    <ImageView
+        android:id="@+id/cardE"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal"
+        android:layout_rowWeight="1"
+        android:background="@color/colorAccent"
+        android:contentDescription="@string/mobiledata_desc"
+        android:gravity="center"
+        android:src="@drawable/mobiledata"
+        android:textColor="@color/white"
+        android:textSize="90sp" />
+
+    <ImageView
+        android:id="@+id/cardF"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal"
+        android:layout_rowWeight="1"
+        android:background="@color/colorAccent"
+        android:contentDescription="@string/flightmode_desc"
+        android:gravity="center"
+        android:src="@drawable/plane"
+        android:textColor="@color/white"
+        android:textSize="90sp" />
+
+</GridLayout>

@@ -32,7 +32,7 @@ class WifiInformation : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.wifi_design)
-        getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
         wifiEnable()
     }
 
@@ -98,7 +98,6 @@ class WifiInformation : AppCompatActivity() {
         registerReceiver(receiverWifi, IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
         super.onResume()
     }
-
 
     // Broadcast receiver class called its receive method
     // when number of wifi connections changed
