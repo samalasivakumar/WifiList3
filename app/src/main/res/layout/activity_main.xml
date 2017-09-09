@@ -10,7 +10,7 @@
     tools:context="com.example.sivakumar.wifilist3.MainActivity">
 
     <ImageView
-        android:id="@+id/wifi"
+        android:id="@+id/tile_wifi"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_columnWeight="1"
@@ -24,7 +24,7 @@
         android:textSize="90sp" />
 
     <ImageView
-        android:id="@+id/silent"
+        android:id="@+id/tile_silent"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_columnWeight="1"
@@ -38,7 +38,7 @@
         android:textSize="90sp" />
 
     <ImageView
-        android:id="@+id/vibrate"
+        android:id="@+id/tile_vibrate"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_columnWeight="1"
@@ -52,7 +52,7 @@
         android:textSize="90sp" />
 
     <ImageView
-        android:id="@+id/bluetooth"
+        android:id="@+id/tile_bluetooth"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_columnWeight="1"
